@@ -1,6 +1,6 @@
 # ELI5: Proxies and Reverse Proxies (with Nginx Example)
 
-## What is a Proxy? (Like a Middleman Helper)
+## What is a Proxy? (Like a Middleman Helper) (THERE IS MORE THEN PROXYS IN THIS PROJECT ADVANCED VM HELPERISHIDY AND MORE.........)
 
 Imagine you want to play with toys on the other side of the playground, but there's a big bully blocking the way. A **proxy** is like your sneaky friend who:
 1. Takes your toy request 🧸.
