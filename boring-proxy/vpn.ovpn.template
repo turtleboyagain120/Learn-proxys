@@ -1,0 +1,23 @@
+# Hide.me Free OpenVPN Template - Fill your details
+client
+dev tun
+proto udp
+remote [SERVER e.g. de1.hide.me] 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+remote-cert-tls server
+auth-user-pass /etc/openvpn/auth.txt  # optional
+cipher AES-256-GCM
+auth SHA256
+key-direction 1
+verb 3
+
+<ca>
+PASTE_CA_HERE
+</ca>
+
+# User: yourusername
+# Pass: yourpass
+

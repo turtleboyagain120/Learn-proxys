@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: blackboxos
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db:/docker-entrypoint-initdb.d  # Mount schema.sql
+    ports:
+      - "5432:5432"
+
+  rust-vm:
+    build: ./vm-core
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://admin:secret@db:5432/blackboxos
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rust-vm
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  python-utils:
+    build: ./utils
+    depends_on:
+      - rust-vm
+    volumes:
+      - ./utils:/app
+
+  # Stub services for natives (run in Docker for demo)
+  native-c:
+    build: ./native
+    # Links via Rust FFI (static lib)
+
+volumes:
+  postgres_data:
+

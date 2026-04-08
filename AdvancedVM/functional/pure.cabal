@@ -1,0 +1,10 @@
+name: pure
+version: 0.1.0.0
+
+executable pure-exe
+  main-is: Main.hs
+  other-modules: Pure
+  build-depends: base ^>=4.17, aeson
+  hs-source-dirs: .
+  default-language: GHC2021
+

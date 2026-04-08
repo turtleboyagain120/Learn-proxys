@@ -1,0 +1,9 @@
+# Download your hide.me ovpn here, rename to vpn.ovpn
+# Example structure:
+client
+dev tun
+proto udp
+remote xxx.hide.me. 1194
+
+... (full ovpn from hide.me)
+
