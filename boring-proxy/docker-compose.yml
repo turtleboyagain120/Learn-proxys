@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  boring-proxy:
+    build: .
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    volumes:
+      - ./vpn.ovpn:/etc/openvpn/vpn.ovpn:ro
+      - ovpn-logs:/var/log/openvpn
+    ports:
+      - "8080:8080"
+      - "1080:1080"
+    restart: unless-stopped
+
+volumes:
+  ovpn-logs:
+
