@@ -1,0 +1,37 @@
+# 🕒 FAMILY TIME TRACKER - 1 DAY TEMPLATE 📊
+**Paste in Notepad → Fill tomorrow → Math = Safe Astrom time!**
+
+Date: ___________
+
+
+-----|--------------|--------------|--------------|--------------|-------
+6AM  |              |              |              |              | 
+7AM  |              |              |              |              | 
+8AM  |              |              |              |              | 
+9AM  |              |              |              |              | 
+10AM |              |              |              |              | 
+11AM |              |              |              |              | 
+12PM |              |              |              |              | 
+1PM  |              |              |              |              | 
+2PM  |              |              |              |              | 
+3PM  |              |              |              |              | 
+4PM  |              |              |              |              | 
+5PM  |              |              |              |              | 
+6PM  |              |              |              |              | 
+7PM  |              |              |              |              | 
+8PM  |              |              |              |              | 
+9PM  |              |              |              |              | 
+
+## 🧮 MATH SECTION (End of Day)
+Dad Free Hours: ___ x 60 = ___ min
+Mom Free Hours: ___ x 60 = ___ min
+Phone Checks: ___ x 5min buffer = ___ min
+Phone Away: ___ min
+
+**SAFE ASTRON TIME = (Dad Free + Phone Away) - Buffer = ___ minutes/day** 
+
+## 🚀 Tomorrow's Plan:
+Peak Window: ________ - ________ (___ min safe)
+Switch Buffer: 1 min (Win+L → Enter pass)
+
+**Copy to USB/school folder → Pattern repeats forever!** 📈

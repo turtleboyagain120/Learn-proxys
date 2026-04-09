@@ -1,0 +1,10 @@
+# 🕒 REALISTIC FAMILY TRACKER - 6AM-6PM 📊
+**Easy checkboxes → No guessing → Tomorrow fill → Safe Astrom math!**
+
+Date: ___________
+
+Time | Dad Home? | Car Gone? | TV Off? | Voices? | PC Free?
+-----|-----------|-----------|---------|---------|--------
+6AM  | ☐Yes ☐No  | ☐Yes ☐No  | ☐Yes ☐No | ☐Yes ☐No | ☐Yes ☐No
+7AM  | ☐Yes ☐No  | ☐Yes ☐No  | ☐Yes ☐No | ☐Yes ☐No | ☐Yes ☐No
+8AM  | ☐Yes ☐No  | ☐Yes ☐No  |
