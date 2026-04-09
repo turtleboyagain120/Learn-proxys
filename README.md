@@ -1,4 +1,4 @@
-# ELI5: Proxies and Reverse Proxies (with Nginx Example)
+# ELI5: Proxies and Reverse Proxies (with Nginx Example AND Educational/research only, own risk) 
 
 ## What is a Proxy? (Like a Middleman Helper) (THERE IS MORE THEN PROXYS IN THIS PROJECT LIKE ADVANCED VM)
 
