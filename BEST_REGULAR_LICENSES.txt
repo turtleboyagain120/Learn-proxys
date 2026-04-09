@@ -1,0 +1,43 @@
+BEST REGULAR USE LICENSES - TOP PICKS FOR GAMES/TOOLS/APPS
+========================================================
+
+Short, battle-tested. For itch.io, GitHub, Steam. Pick one per project.
+
+1. "MIT License" - BEST FOR GENERAL/OPEN (9.5/10)
+Copyright [YEAR] [NAME]
+
+Permission is hereby granted [...] (full standard MIT text: https://opensource.org/license/mit/)
+
+Why best: Maximum compatibility. Commercial OK. Just keep notice. Use everywhere.
+
+---
+
+2. "CC BY-NC-SA 4.0" - BEST FOR GAMES ASSETS (9/10)
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+BY: Credit creator.
+NC: Non-commercial.
+SA: Share-alike (derivs same license).
+
+Perfect for horror game assets/models/music. Streams OK w/credit.
+
+---
+
+3. "Custom Game EULA" - BEST FOR EXECUTABLES (8.5/10)
+© [YEAR] [NAME]. All rights reserved.
+
+You MAY: Play personally; stream/record with credit (no monetization of game itself).
+
+You MAY NOT: Distribute files; modify/extract assets; reverse engineer; use IP commercially.
+
+AS IS. No liability. [State] law.
+
+Simple footer/text file for itch.io zips.
+
+================================
+RANKING FOR REGULAR USE:
+1. MIT - Code repos/GitHub public.
+2. CC BY-NC-SA - Creative assets (Unity/Godot).
+3. Custom EULA - Downloadable games.
+
+Copy-paste ready. Customize [YEAR]/[NAME].

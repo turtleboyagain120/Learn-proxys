@@ -1,0 +1,62 @@
+CUSTOM MADE-UP LICENSES BY BLACKBOXAI - GOOD BALANCED ONES
+==================================================================
+
+Original licenses crafted for versatility. Use for games/tools/apps. Medium length, clear.
+
+1. "BBL-OPEN v1.0 - FULL PERMISSIVE" (For open GitHub/code)
+Copyright (c) [YEAR] [YOUR NAME OR ALIAS]. Provided under BBL-OPEN.
+
+Anyone may: use, copy, modify, merge, publish, distribute, sublicense, sell.
+
+REQUIREMENTS:
+- Retain this notice, copyright, and license in all substantial copies/derivatives.
+- If modified, disclose changes.
+
+ALLOWED: Commercial, private, study, redistribution.
+
+NO WARRANTY: AS IS. No liability for damages, fitness, or errors. Law of [Your Jurisdiction].
+
+---
+
+2. "BBL-CREATIVE v2.0 - GAME/CONTENT FRIENDLY" (For assets/games)
+Copyright (c) [YEAR] [YOUR NAME]. BBL-CREATIVE License.
+
+GRANT: Personal use, play, internal mods; stream/record/share with attribution ("Assets by [NAME]").
+
+RESTRICTIONS:
+- No redistribution of raw files/assets.
+- No commercial resale of unmodified work.
+- Credit required: "[NAME]'s [Project] (CC-like)".
+- Derivatives non-commercial or share-alike.
+
+FAN WORKS: Allowed w/credit, no IP claim.
+
+AS IS, NO WARRANTY. [Jurisdiction] law. Disputes resolved amicably first.
+
+---
+
+3. "BBL-PRO v3.0 - PROTECTED COMMERCIAL" (For paid/private repos)
+Copyright (c) [YEAR] [YOUR NAME]. All rights reserved. BBL-PRO.
+
+GRANT: Private use on owned devices; internal business evaluation.
+
+PROHIBITED:
+- Share, distribute, sell, host publicly.
+- Reverse engineer, extract, decompile.
+- Modify beyond config/keybinds.
+- Use trademarks/name commercially.
+
+CONTENT: Personal recordings OK (fair use limits).
+
+TERMINATION: Breach revokes rights. Delete copies.
+
+PROVIDED AS IS. Zero warranty/liability. [Jurisdiction] governs exclusively.
+
+====================================
+WHY GOOD:
+- BBL-OPEN: Like MIT, max adoption.
+- BBL-CREATIVE: Balances creators/fans (streams/remixes OK).
+- BBL-PRO: Protects paid work without overkill.
+
+CUSTOMIZE: Replace brackets. Paste into LICENSE.md or game popup.
+Perfect for indie devs!

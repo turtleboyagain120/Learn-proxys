@@ -1,0 +1,64 @@
+GITHUB GENERAL USE LICENSE GUIDE - 3 MEDIUM-LENGTH LICENSES
+==================================================
+
+For general GitHub projects (code, tools, games, apps). Permissive to proprietary spectrum.
+
+1. "GGL v1.0 - PERMISSIVE OPEN" (MIT-STYLE)
+© [YEAR] [YOUR NAME]. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files, to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
+
+CONDITIONS:
+- Include original copyright notice and this permission notice in all copies.
+- State changes made.
+
+NO WARRANTY: Provided "AS IS". In no event liable for any claim, damages, or liability from the Software.
+
+Governing Law: [Your State/Country].
+
+---
+
+2. "GGL v2.0 - BALANCED SHARE-ALIKE" (GPL-STYLE)
+© [YEAR] [YOUR NAME]. All rights reserved.
+
+Grant of license to use, copy, modify, merge, publish, distribute, sublicense for any purpose.
+
+CONDITIONS:
+1. Include copyright notice, license, and disclaimer in all copies.
+2. If distribute/modify, provide source code under same license (share-alike).
+3. State prominent changes.
+
+PERMITTED: Commercial use, private use, study, distribution.
+
+PROHIBITED: Private use without sharing source if modified/distributed.
+
+NO WARRANTY: "AS IS". No liability for damages. [Your State] law.
+
+---
+
+3. "GGL v3.0 - COMMERCIAL PROTECTED"
+© [YEAR] [YOUR NAME]. All rights reserved.
+
+You may: Use, copy for personal/internal business use; modify for private purposes.
+
+You may NOT:
+- Distribute, sell, rent, sublicense the software or derivatives.
+- Reverse engineer, decompile, disassemble.
+- Remove/alter copyrights or notices.
+- Use name/trademarks without permission.
+
+PERMITTED: Personal study, private mods, internal company tools (no sharing).
+
+Content creation (streams/videos) OK with credit; no asset extraction.
+
+TERMINATION: Breach ends license.
+
+AS IS, NO WARRANTY. No liability. [Your State] law governs.
+
+================================
+WHEN TO USE:
+- GGL v1.0: Open source, forks/stars wanted.
+- GGL v2.0: Ensure derivatives stay open (e.g. tools/games).
+- GGL v3.0: Proprietary code, GitHub private-ish.
+
+DEPLOY: Copy to LICENSE file. Replace [YEAR]/[NAME]/[STATE].

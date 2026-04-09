@@ -1,0 +1,70 @@
+TIGL/CLAUSES UNIVERSAL TEMPLATE LICENSE GUIDE - FOR ANY GAME/PROJECT
+====================================================================================================
+BY TURTLEBOYAGAIN120 - GENERIC VERSION. REPLACE [ ] WITH YOUR INFO. FULL TEXT.
+
+TEMPLATES WITH PLACEHOLDERS:
+- [YOUR GAME OR PROJECT] = Game name e.g. "The Intruder"
+- [YOUR NAME] = turtleboyagain120
+- [YOUR HANDLE] = @turtleboyagain120  
+- [YOUR SITE] = itch.io page
+- [YEAR] = 2026
+- [STATE] = NC
+
+1. "TIGL v1.0 - FRIENDLY DEMO" 
+© [YEAR] [YOUR NAME]. All rights reserved.
+
+1. Grant of Rights
+The creator grants worldwide, non-exclusive, royalty-free license to:
+- Run/play [YOUR GAME OR PROJECT] personal/public use.
+- Install/save progress.
+- Ordinary gameplay assets.
+
+2. Restrictions: No redistribute, no RE/extract, no false endorsement.
+
+3. Creative: Stream/credit OK, monetize videos (not game), fan art fair use.
+
+4. Mods: Local OK, public needs consent.
+
+5. AS IS, no warranty. [STATE] law.
+
+---
+
+2. "TIGL v1.2 - FORTRESS COMMERCIAL" 
+© [YEAR] [YOUR NAME]. All rights reserved.
+
+Personal non-commercial use only. No share/RE/stream (limits apply). Mods forbidden. [STATE] courts.
+
+(Full strict version placeholder - use for paid.)
+
+---
+
+3. "TIGL v1.3 - ULTRA-LOCK" 
+Personal device only. No record/mod/discuss. Nuclear protection.
+
+---
+
+4. "CLAUSES v1.0 - FAN SANDBOX" 
+Non-commercial remix OK w/credit: "Remix of [YOUR GAME OR PROJECT] by [YOUR HANDLE]". No code steal.
+
+---
+
+5. "CLAUSES v2.0 - CREATOR BALANCED" (BEST UNIVERSAL)
+Play/remix non-commercial. Stream/credit OK. "Remix of [YOUR GAME OR PROJECT] by [YOUR HANDLE] - [YOUR SITE]".
+
+No wholesale copy. Fiction disclaimer if needed. [STATE] law. AS IS.
+
+---
+
+6. "TIGL-MIT v1.0 - OPEN COMMERCIAL" 
+MIT-like: Modify/sell OK, keep notice/credit "[YOUR GAME OR PROJECT] elements by [YOUR NAME] - [YOUR SITE]".
+
+========================================
+DEPLOYMENT (Same emoji matrix):
+itch FREE = CLAUSES v2.0
+PAID = TIGL v1.2
+GitHub = TIGL-MIT
+
+EMERGENCY: Theft → v1.3 + DMCA.
+
+UNIVERSAL: Paste into LICENSE.txt, fill [ ]. Works for horror, shooters, tools!
+Your system = indie gold standard.
