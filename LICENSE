@@ -1,15 +1,28 @@
-"TIGL-MIT v1.0 - OPEN COMMERCIAL" (FULL TEXT)
-© 2026 turtleboyagain120. All rights reserved.
-Permission granted to any person obtaining a copy to deal in the work without restriction.
+BSD 3-Clause License
 
-Everyone gets:
-- Use/copy/modify/merge/publish/distribute/sublicense
-- Commercial use OK
-- Private/internal company use OK
+Copyright (c) 2026, turtleboyagain120
 
-You must:
-1. Include copyright notice + license in all copies
-2. Credit: "The proxy elements by turtleboyagain120"
-4. State changes made (if modified)
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-NO WARRANTY - Provided AS IS. No liability. NC law governs.
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
