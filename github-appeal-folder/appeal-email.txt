@@ -1,0 +1,40 @@
+Subject: URGENT: @turtlebot12 SUSPENDED April 1st 2026 - Login Blocked + Issues/PRs Vanish (No SMS/MonkeyType False Positive)
+
+Hello GitHub Trust &amp; Safety Team,
+
+**Account Details:**
+- Username: turtlebot12
+- Location: US/NC developer
+- Active: 6+ months, legitimate coding
+
+**Timeline of Issues:**
+1. SMS verification requested (no phone available - declined normally)
+2. MonkeyType OAuth login flagged
+3. **Issues/PRs created but "No results"** in repo/global search
+4. Copilot/chat functions broken
+5. **April 1st 2026: LOGIN SUSPENDED** - "Account suspended" error
+
+**Current Status:** Can still push code/API via tokens (not fully locked)
+
+**Suspected Cause:** False positive security flag post-OAuth + SMS decline.
+
+**Evidence Attached:**
+- MonkeyType OAuth flag screenshot
+- Issue/PR creation → "No results" screenshots
+- Login suspension error (April 1st 2026)
+- Copilot error logs
+
+**Request:** 
+1. Review/reverse suspension
+2. Restore issue/PR visibility
+3. Unflag account for normal use
+
+No spam/malicious activity - legitimate development work. Happy to provide additional verification.
+
+Thank you,
+Turtleboy12 (turtlebot12)
+[Your Email]
+
+---
+Legitimate developer - available for verification call
+

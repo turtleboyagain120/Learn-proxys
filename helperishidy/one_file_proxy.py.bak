@@ -1,0 +1,131 @@
+#!/usr/bin/env python3
+"""
+Helperishidy Python Single-File Proxy - 10/10 School Bypass
+Multi-Cache Stealth Chain + Full Rewrite
+Usage: python one_file_proxy.py
+Open http://localhost:5000
+"""
+import flask
+from flask import request, Response
+from bs4 import BeautifulSoup
+import requests
+import re
+import urllib.parse
+from concurrent.futures import ThreadPoolExecutor
+import time
+
+app = flask.Flask(__name__)
+
+# Cache chain (Google, Bing, Archive.ph, Perplexity)
+CACHES = [
+    {'name': 'Google1', 'url': lambda u: f'https://cache.googleusercontent.com/search?q=cache:{u}'},
+    {'name': 'Google2', 'url': lambda u: f'https://webcache.googleusercontent.com/search?q=cache:{u}'},
+    {'name': 'Bing', 'url': lambda u: f'https://cc.bingj.com/cache.aspx?url={u}&r=0'}, 
+    {'name': 'Archive.ph', 'url': lambda u: f'https://archive.ph/{u}'},
+    {'name': 'Perplexity', 'url': lambda u: f'https://www.perplexity.ai/search?q={u}'},
+]
+
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+}
+
+def get_cache_content(target_url):
+    \"\"\"Try caches in parallel with fallback\"\"\"
+    def fetch_cache(cache):
+        try:
+            resp = requests.get(cache['url'](target_url), headers=HEADERS, timeout=10)
+            if resp.status_code == 200 and len(resp.content) > 1000:
+                return cache['name'], resp
+        except:
+            pass
+        return None
+
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        futures = [executor.submit(fetch_cache, cache) for cache in CACHES[:3]]  # Parallel first 3
+        for future in futures:
+            result = future.result(timeout=8)
+            if result:
+                return result[1]
+
+    # Sequential fallback
+    for cache in CACHES:
+        resp = fetch_cache(cache)
+        if resp:
+            return resp[1]
+    return None
+
+def rewrite_html(html_content, original_url):
+    \"\"\"Smart rewrite: links/scripts/CSS proxy-ify\"\"\"
+    soup = BeautifulSoup(html_content, 'html.parser')
+    proxy_base = request.host_url.rstrip('/')
+
+    for tag in soup.find_all(['a', 'link', 'script', 'img', 'form'], href=True):
+        url = tag['href']
+        if is_relative(url):
+            tag['href'] = url  # Keep relative
+        elif not url.startswith(('http', '//', '#', 'mailto:', 'tel:')):
+            p_url = urllib.parse.urljoin(original_url, url)
+            tag['href'] = f'{proxy_base}proxy?url={urllib.parse.quote(p_url)}'
+
+    for tag in soup.find_all('form', action=True):
+        action = tag['action']
+        p_url = urllib.parse.urljoin(original_url, action)
+        tag['action'] = f'{proxy_base}proxy?url={urllib.parse.quote(p_url)}'
+
+    # Forms preserve method
+    for tag in soup.find_all(src=True):
+        src = tag['src']
+        if is_relative(src):
+            pass
+        else:
+            p_url = urllib.parse.urljoin(original_url, src)
+            tag['src'] = f'{proxy_base}proxy?url={urllib.parse.quote(p_url)}'
+
+    # Fix base
+    if soup.base:
+        soup.base.decompose()
+
+    return str(soup)
+
+def is_relative(url):
+    return re.match(r'^/|^\.', url)
+
+@app.route('/')
+def index():
+    return '''<!DOCTYPE html>
+<html><head><title>Helperishidy Python</title>
+<style>body{max-width:800px;margin:50px auto;padding:20px;background:#f8f9fa;font-family:sans-serif;}
+input{width:100%;padding:16px;border:2px solid #e0e0e0;border-radius:12px;font-size:16px;}button{background:#1a73e8;color:white;border:none;padding:16px 32px;border-radius:12px;font-size:16px;cursor:pointer;width:100%;}iframe{width:100%;height:700px;border:none;border-radius:12px;}</style></head>
+<body><h1>🚀 Helperishidy Python Proxy</h1>
+<p>Enter URL to bypass:</p><input id=url type=url placeholder="https://tiktok.com"><button onclick="load()">🔥 Unblock</button>
+<iframe id=frame style="display:none"></iframe>
+<script>function load(){let u=document.getElementById('url').value;document.getElementById('frame').src='/proxy?url='+encodeURIComponent(u);document.getElementById('frame').style.display='block';}</script></body></html>
+'''
+
+@app.route('/proxy')
+def proxy():
+    target_url = request.args.get('url')
+    if not target_url:
+        return 'Missing ?url=', 400
+
+    resp = get_cache_content(target_url)
+    if not resp:
+        return f'<h1>❌ No cache found for {target_url}</h1><p>Try simpler URL</p>', 404
+
+    content_type = resp.headers.get('content-type', '')
+    content = resp.content
+
+    # Rewrite HTML/JS/CSS if text
+    if 'text/html' in content_type or 'text/' in content_type:
+        content = rewrite_html(content.decode('utf-8', errors='ignore'), target_url).encode('utf-8')
+
+    # Headers proxy
+    headers = {k: v for k,v in resp.headers.items() if k.lower() not in ('content-encoding', 'transfer-encoding')}
+    headers['X-Proxy-By'] = 'Helperishidy Python'
+
+    return Response(content, status=resp.status_code, headers=headers)
+
+if __name__ == '__main__':
+    print("🚀 Helperishidy Python running on http://localhost:5000")
+    print("pip install flask requests beautifulsoup4")
+    app.run(host='0.0.0.0', port=5000, debug=False)

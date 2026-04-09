@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fortnite Endgame (Advanced AI, Cinematic Camera)</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000000;
+      color: #fff;
+      font-family: monospace;
+    }
+    #ui {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      font-size: 12px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 8px 12px;
+      border-radius: 6px;
+      pointer-events: none;
+      z-index: 100;
+    }
+    #game-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+</head>
+<body>
+  <div id="game-container"></div>
+  <div id="ui">
+    <h2>Fortnite Endgame (Advanced AI) - Watch Only</h2>
+    <p>Zone: <span id="zone-radius">900</span> ft</p>
+    <p>Players Alive: <span id="alive-count">20</span></p>
+    <p>Builds Alive: <span id="build-count">0</span></p>
+  </div>
+
+  <script>
+    const gameState = {
+      zoneRadius: 900,
+      alivePlayers: 20,
+    };
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x080808);
+
+    // Main camera + a “look‑at target”
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    const cameraTarget = new THREE.Vector3(0, 5, 0); // focus on the center
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById("game-container").appendChild(renderer.domElement);
+
+    // Lights
+    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambient);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.3);
+    dirLight.position.set(100, 100, 50);
+    scene.add(dirLight);
+
+    // Ground arena ~60 ft wide
+    const groundRadius = 30;
+    const groundGeo = new THREE.CircleGeometry(groundRadius, 64);
+    const groundMat = new THREE.MeshBasicMaterial({ color: 0x222222 });
+    const ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.rotation.x = -Math.PI / 2;
+    scene.add(ground);
+
+    // 20 advanced AI bots (no phasing)
+    const players = [];
+    const builds = [];
+
+    for (let i = 0; i < 20; i++) {
+      const playerBox = new THREE.CylinderGeometry(0.4, 0.4, 2, 8);
+      const playerMat = new THREE.MeshBasicMaterial({
+        color: i % 2 === 0 ? 0xaa0000 : 0x0000aa,
+        emissive: 0x111111,
+      });
+      const player = new THREE.Mesh(playerBox, playerMat);
+      player.position.set(
+        (Math.random() - 0.5) * groundRadius * 1.5,
+        1,
+        (Math.random() - 0.5) * groundRadius * 1.5
+      );
+      player.rotation.y = Math.random() * Math.PI * 2;
+
+      player.userData = {
+        id: i,
+        targetX: 0,
+        targetZ: 0,
+        speed: 0.6 + Math.random() * 0.8,
+        layer: 0,
+        buildTimer: 0,
+        editTimer: 0,
+        state: "idle", // idle, patrol, chase, fight, retreat, zoning
+        aimTimer: 0,
+      };
+      players.push(player);
+      scene.add(player);
+    }
+
+    // Solid build pieces (no clipping)
+    function createWall(pos, height = 2.0) {
+      const geo = new THREE.BoxGeometry(0.3, height, 2);
+      const mat = new THREE.MeshBasicMaterial({ color: 0x555555 });
+      const piece = new THREE.Mesh(geo, mat);
+      piece.position.copy(pos);
+      piece.userData = { type: "wall", height, owner: null };
+      scene.add(piece);
+      builds.push(piece);
+      return piece;
+    }
+
+    function createRamp(pos, dir = 1, length = 2) {
+      const geo = new THREE.BoxGeometry(length, 0.6, 0.3);
+      const mat = new THREE.MeshBasicMaterial({ color: 0x444444 });
+      const piece = new THREE.Mesh(geo, mat);
+      piece.rotation.y = -Math.PI / 2 * dir;
+      piece.position.copy(pos);
+      piece.userData = { type: "ramp", length, dir, owner: null };
+      scene.add(piece);
+      builds.push(piece);
+      return piece;
+    }
+
+    function createFloor(pos, size = 1.8) {
+      const geo = new THREE.BoxGeometry(size, 0.2, size);
+      const mat = new THREE.MeshBasicMaterial({ color: 0x333333 });
+      const piece = new THREE.Mesh(geo, mat);
+      piece.position.copy(pos);
+      piece.userData = { type: "floor", size, owner: null };
+      scene.add(piece);
+      builds.push(piece);
+      return piece;
+    }
+
+    function createPyramid(pos, size = 2) {
+      const geo = new THREE.ConeGeometry(1, 2, 4);
+      const mat = new THREE.MeshBasicMaterial({ color: 0x666666 });
+      const piece = new THREE.Mesh(geo, mat);
+      piece.position.set(pos.x, pos.y + 1, pos.z);
+      piece.userData = { type: "pyramid", size, owner: null };
+      scene.add(piece);
+      builds.push(piece);
+      return piece;
+    }
+
+    // NON‑PHASING push onto a ramp (slide‑jump style)
+    function slideJumpToRamp(p, ramp) {
+      const safeHeight = ramp.position.y + 0.8;
+      if (p.position.y < safeHeight) {
+        p.position.y = safeHeight;
+      }
+
+      const dir = new THREE.Vector3(
+        Math.sin(ramp.rotation.y),
+        0,
+        -Math.cos(ramp.rotation.y)
+      ).normalize();
+
+      const approach = ramp.position.clone().add(dir.clone().multiplyScalar(-1));
+      p.position.copy(approach);
+      p.position.y += 0.1;
+      p.userData.layer = 1;
+    }
+
+    // Edit helpers (no floating‑through geometry)
+    function breakWall(piece) {
+      if (!piece.userData || piece.userData.type !== "wall") return;
+      scene.remove(piece);
+      piece.geometry.dispose();
+      piece.material.dispose();
+      const idx = builds.indexOf(piece);
+      if (idx !== -1) builds.splice(idx, 1);
+    }
+
+    function rotateWall90(piece) {
+      if (!piece.userData || piece.userData.type !== "wall") return;
+      piece.rotation.y += Math.PI / 2;
+    }
+
+    // Visual zone ring
+    const zoneIndicators = new THREE.Group();
+    const zoneGeo = new THREE.CircleGeometry(gameState.zoneRadius / 10, 64);
+    zoneGeo.rotateX(-Math.PI / 2);
+    const zoneMat = new THREE.MeshBasicMaterial({
+      color: 0xff0000,
+      transparent: true,
+      opacity: 0.35,
+      side: THREE.DoubleSide,
+    });
+    const zoneMesh = new THREE.Mesh(zoneGeo, zoneMat);
+    zoneMesh.position.y = 0.1;
+    zoneIndicators.add(zoneMesh);
+    scene.add(zoneIndicators);
+
+    // UI and zone updates
+    function updateZone() {
+      if (gameState.zoneRadius > 30) {
+        gameState.zoneRadius -= 0.15;
+      }
+
+      const scale = gameState.zoneRadius / 30;
+      zoneIndicators.scale.set(scale, 1, scale);
+
+      document.getElementById("zone-radius").textContent =
+        gameState.zoneRadius.toFixed(0);
+      document.getElementById("alive-count").textContent =
+        gameState.alivePlayers;
+      document.getElementById("build-count").textContent =
+        builds.length;
+    }
+
+    function updatePlayers() {
+      players.forEach((p) => {
+        const dt = 0.035;
+        const rot = p.rotation.y;
+        const forward = new THREE.Vector3(
+          Math.sin(rot),
+          0,
+          -Math.cos(rot)
+        ).normalize();
+        const right = new THREE.Vector3(
+          Math.cos(rot),
+          0,
+          Math.sin(rot)
+        ).normalize();
+
+        // State machine
+        if (Math.random() < 0.002) {
+          const r = Math.random();
+          if (r < 0.2) p.userData.state = "idle";
+          else if (r < 0.5) p.userData.state = "patrol";
+          else if (r < 0.75) p.userData.state = "fight";
+          else p.userData.state = "zoning";
+        }
+
+        switch (p.userData.state) {
+          case "idle":
+            if (Math.random() < 0.01) p.userData.state = "patrol";
+            break;
+
+          case "patrol":
+            const ang = p.userData.id + Date.now() * 0.001;
+            p.userData.targetX = Math.cos(ang) * 20;
+            p.userData.targetZ = Math.sin(ang) * 20;
+            break;
+
+          case "fight":
+            if (Math.random() < 0.005) {
+              const ramp = builds.find(b => b.userData.type === "ramp");
+              if (ramp) slideJumpToRamp(p, ramp);
+            }
+            if (Math.random() < 0.004) p.userData.state = "retreat";
+            break;
+
+          case "retreat":
+            p.userData.targetX *= 1.5;
+            p.userData.targetZ *= 1.5;
+            if (p.userData.layer > 0) {
+              p.userData.layer = 0;
+              p.position.y = 1;
+            }
+            if (Math.random() < 0.01) p.userData.state = "patrol";
+            break;
+
+          case "zoning":
+            const safeR = gameState.zoneRadius;
+            const dist = Math.hypot(p.position.x, p.position.z);
+            if (dist > safeR * 0.9) {
+              const angle = Math.atan2(p.position.z, p.position.x);
+              p.userData.targetX = Math.cos(angle) * safeR * 0.8;
+              p.userData.targetZ = Math.sin(angle) * safeR * 0.8;
+            }
+            break;
+        }
+
+        // Move toward target (no phasing)
+        const dx = p.userData.targetX - p.position.x;
+        const dz = p.userData.targetZ - p.position.z;
+        const dist = Math.hypot(dx, dz);
+        const speed = p.userData.speed * dt;
+
+        if (dist > 0.3) {
+          p.position.x += (dx / dist) * speed;
+          p.position.z += (dz / dist) * speed;
+          p.rotation.y = Math.atan2(dz, dx);
+        }
+
+        if (p.position.y < 1) p.position.y = 1;
+
+        if (p.userData.aimTimer > 0) {
+          p.userData.aimTimer -= 1;
+          p.position.y = 1.1 + Math.sin(Date.now() * 0.01) * 0.1;
+        } else if (Math.random() < 0.01) {
+          p.userData.aimTimer = 20 + Math.floor(Math.random() * 20);
+        }
+      });
+    }
+
+    function updateBuilds() {
+      players.forEach((p) => {
+        const rot = p.rotation.y;
+        const forward = new THREE.Vector3(
+          Math.sin(rot),
+          0,
+          -Math.cos(rot)
+        ).normalize();
+        const right = new THREE.Vector3(
+          Math.cos(rot),
+          0,
+          Math.sin(rot)
+        ).normalize();
+
+        if (p.userData.buildTimer <= 0) {
+          const r = Math.random();
+          const base = p.position.clone();
+          const offset = forward.clone().multiplyScalar(1.2);
+
+          if (r < 0.3) {
+            const wall = createWall(base.add(offset));
+            wall.rotation.y = rot;
+            wall.userData.owner = p.userData.id;
+          } else if (r < 0.6) {
+            const rampPos = base.clone().add(forward.clone().multiplyScalar(1.5));
+            createRamp(rampPos, 1, 2.0).userData.owner = p.userData.id;
+          } else if (r < 0.8) {
+            const floorPos = base.clone().add(right.clone().multiplyScalar(0.8));
+            floorPos.y = 0.1;
+            createFloor(floorPos, 1.6).userData.owner = p.userData.id;
+          } else {
+            const pyrPos = base.clone().add(forward.clone().multiplyScalar(1.5));
+            createPyramid(pyrPos).userData.owner = p.userData.id;
+          }
+
+          p.userData.buildTimer = 100 + Math.floor(Math.random() * 200);
+        } else {
+          p.userData.buildTimer -= 1;
+        }
+
+        if (p.userData.editTimer <= 0) {
+          const wall = builds.find(
+            b => b.userData.type === "wall" && b.userData.owner === p.userData.id
+          );
+          if (wall) {
+            if (Math.random() < 0.5) {
+              rotateWall90(wall);
+            } else {
+              breakWall(wall);
+            }
+          }
+          p.userData.editTimer = 150 + Math.floor(Math.random() * 200);
+        } else {
+          p.userData.editTimer -= 1;
+        }
+      });
+    }
+
+    // ============ VISUAL CAMERA RIG (no phasing) ============ //
+
+    // Multiple camera “poses”
+    const cameraPoses = [
+      // Above‑center (like a highlight cam)
+      { x: 0, y: 60, z: 80, lookAtY: 8 },
+      // Side right
+      { x: 50, y: 30, z: 0, lookAtY: 6 },
+      // Side left
+      { x: -50, y: 30, z: 0, lookAtY: 6 },
+      // Back angle
+      { x: 0, y: 30, z: -80, lookAtY: 6 },
+      // Front low
+      { x: 0, y: 10, z: 70, lookAtY: 4 },
+    ];
+
+    let currentPoseIndex = 0;
+    let nextPoseIndex = 0;
+    let poseTime = 0;          // how long we’ve been in this pose
+    const poseDuration = 4000; // 4 seconds per pose
+
+    // Smoothly move camera from one position to another
+    const tempVec = new THREE.Vector3();
+    function updateCamera() {
+      poseTime += 16; // approx 60 FPS step
+      if (poseTime > poseDuration) {
+        poseTime = 0;
+        currentPoseIndex = nextPoseIndex;
+        nextPoseIndex = (nextPoseIndex + 1) % cameraPoses.length;
+      }
+
+      const a = cameraPoses[currentPoseIndex];
+      const b = cameraPoses[nextPoseIndex];
+      const alpha = poseTime / poseDuration;
+
+      // Lerp position
+      tempVec.x = THREE.MathUtils.lerp(a.x, b.x, alpha);
+      tempVec.y = THREE.MathUtils.lerp(a.y, b.y, alpha);
+      tempVec.z = THREE.MathUtils.lerp(a.z, b.z, alpha);
+
+      camera.position.copy(tempVec);
+
+      // Lerp target height slightly for smoother feel
+      const lookAtY = THREE.MathUtils.lerp(a.lookAtY, b.lookAtY, alpha);
+      cameraTarget.y = lookAtY;
+
+      camera.lookAt(cameraTarget);
+    }
+
+    // Game loop (includes camera + AI + zone)
+    function gameLoop() {
+      updateCamera();
+      updatePlayers();
+      updateBuilds();
+      updateZone();
+      renderer.render(scene, camera);
+      requestAnimationFrame(gameLoop);
+    }
+
+    updateZone();
+    gameLoop();
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go vs Rust Comparison</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+        table { border-collapse: collapse; width: 100%; max-width: 1000px; margin: auto; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden; }
+        th, td { padding: 16px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-weight: bold; }
+        tr:hover { background: #f8f9ff; }
+        .go { color: #00ADD8; font-weight: bold; }
+        .rust { color: #DEA584; font-weight: bold; }
+        @media (max-width: 768px) { table { font-size: 14px; } th, td { padding: 12px; } }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: #333;">Go vs Rust: Key Comparison</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Aspect</th>
+                <th><span class="go">Go 🟢</span></th>
+                <th><span class="rust">Rust 🦀</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Paradigm</strong></td>
+                <td>Procedural, simple, concurrent (goroutines)</td>
+                <td>Systems, safe (borrow checker), concurrent</td>
+            </tr>
+            <tr>
+                <td><strong>Performance</strong></td>
+                <td>Excellent (GC), fast compile</td>
+                <td>Top-tier (no GC), zero-cost abstractions</td>
+            </tr>
+            <tr>
+                <td><strong>Memory</strong></td>
+                <td>Garbage collected</td>
+                <td>Ownership + no GC = predictable</td>
+            </tr>
+            <tr>
+                <td><strong>Learning Curve</strong></td>
+                <td>Easy (minimal syntax, 25 keywords)</td>
+                <td>Steep (lifetimes, traits)</td>
+            </tr>
+            <tr>
+                <td><strong>Concurrency</strong></td>
+                <td> Goroutines + channels (simple)</td>
+                <td> Fearsome (Send/Sync, async)</td>
+            </tr>
+            <tr>
+                <td><strong>Ecosystem</strong></td>
+                <td>Mature (web, CLI, cloud: Docker/K8s)</td>
+                <td>Growing fast (web3, embedded, WASM)</td>
+            </tr>
+            <tr>
+                <td><strong>Compile Time</strong></td>
+                <td>Very fast</td>
+                <td>Slower (monomorphization)</td>
+            </tr>
+            <tr>
+                <td><strong>Binary Size</strong></td>
+                <td>Small</td>
+                <td>Small-optimized</td>
+            </tr>
+            <tr>
+                <td><strong>Best For</strong></td>
+                <td>Services, APIs, tools (simple/fast dev)</td>
+                <td>Systems, CLI, perf-critical (safety)</td>
+            </tr>
+            <tr>
+                <td><strong>Popularity (2024)</strong></td>
+                <td>High (backend/cloud)</td>
+                <td>High (systems/replacing C++)</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="text-align: center; margin-top: 40px; color: #666;">
+        <strong>Verdict:</strong> Go for simplicity/scalability. Rust for safety/performance.
+    </p>
+</body>
+</html>

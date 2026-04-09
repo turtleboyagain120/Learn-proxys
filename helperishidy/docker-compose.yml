@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  python:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./logs/python:/var/log/proxy
+      - ./html:/usr/share/nginx/html:ro  # shared
+    environment:
+      - HOST=0.0.0.0
+      - PORT=5000
+      - DEBUG=false
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:5000/', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - proxy-net
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./logs/nginx:/var/log/nginx
+      - ./html:/usr/share/nginx/html:ro
+    depends_on:
+      python:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - proxy-net
+    restart: unless-stopped
+
+networks:
+  proxy-net:
+    driver: bridge
+
+volumes:
+  logs:
+

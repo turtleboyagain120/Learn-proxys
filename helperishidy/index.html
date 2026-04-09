@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https: http: data: blob:; frame-src *; connect-src *;">
+    <title>Helperishidy - School Bypass Proxy 🥇</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; background: #f8f9fa; }
+        .container { background: white; border-radius: 16px; padding: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        h1 { color: #1a73e8; text-align: center; font-size: 2.2em; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 1.1em; }
+        input[type="url"] { width: 100%; padding: 16px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; box-sizing: border-box; }
+        input[type="url"]:focus { border-color: #1a73e8; outline: none; }
+        button { background: #1a73e8; color: white; border: none; padding: 16px 32px; border-radius: 12px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 15px; }
+        button:hover { background: #1557b0; }
+        iframe { width: 100%; height: 700px; border: none; border-radius: 12px; margin-top: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .status { text-align: center; margin-top: 15px; font-weight: 500; }
+        .loading { color: #1a73e8; }
+        .error { color: #ef4444; }
+        .success { color: #10b981; }
+        footer { text-align: center; margin-top: 30px; color: #999; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Helperishidy GOAT Proxy</h1>
+        <p class="subtitle">Enter any blocked URL – Bypass schools like a boss! 😈</p>
+        
+        <input type="url" id="urlInput" placeholder="https://tiktok.com or youtube.com" value="">
+        <button onclick="loadUrl()">🔥 UNBLOCK NOW</button>
+        
+        <div id="status" class="status" style="display: none;"></div>
+        <iframe id="proxyFrame" style="display: none;"></iframe>
+        
+        <footer>Multi-Cache Stealth Proxy | Docker Nginx+Python | Fixed &amp; GOAT 🥇 v2.0</footer>
+    </div>
+    
+    <script>
+        function showStatus(msg, type) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = msg;
+            statusEl.className = `status ${type}`;
+            statusEl.style.display = 'block';
+        }
+
+        function loadUrl() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) {
+                showStatus('Enter a URL!', 'error');
+                return;
+            }
+            if (!url.match(/^https?:\/\//)) {
+                window.location.href = '/?url=' + encodeURIComponent('https://' + url);
+                return;
+            }
+            
+            showStatus('🔄 Loading thru cache chain...', 'loading');
+            const frame = document.getElementById('proxyFrame');
+            frame.style.display = 'block';
+            frame.src = '/proxy?url=' + encodeURIComponent(url);
+            frame.onload = () => showStatus('✅ Loaded! 🥇', 'success');
+            frame.onerror = () => showStatus('❌ Load failed - bad cache/URL', 'error');
+        }
+        
+        // Auto-load from query
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('url')) {
+            document.getElementById('urlInput').value = urlParams.get('url');
+            setTimeout(loadUrl, 500);  // Delay for UI
+        }
+    </script>
+</body>
+</html>
+
