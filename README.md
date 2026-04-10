@@ -95,7 +95,7 @@ http {
    docker run -d -p 80:80 -v /path/to/nginx.conf:/etc/nginx/nginx.conf nginx
    ```
 
-**Pro Tip**: Forward proxy = \"help me hide\". Reverse proxy = \"protect my servers\". Nginx is great for reverse!
+**Pro Tip**: Forward proxy = \"help me hide\". Reverse proxy = \"protect my servers\". Nginx is great for reverse! (**I COMPLETED ALL OF THIS IN UNDER 3 - 6 MONTHS ALL CODE IN REPO**)
 
 [More Nginx docs](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
 
