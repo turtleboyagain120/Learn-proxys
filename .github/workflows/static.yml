@@ -1,4 +1,4 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Advanced workflow to deploy all repository contents to GitHub Pages
 name: Deploy static content to Pages
 
 on:
@@ -28,6 +28,11 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    
+    # Forces runner compatibility to eliminate Node.js deprecation warnings
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
